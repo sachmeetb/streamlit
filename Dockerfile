@@ -10,6 +10,7 @@ RUN pip install -r requirements.txt
 
 # Copy app code and set working directory
 COPY application.py application.py
+COPY model.pkl model.pkl
 WORKDIR .
 
 # Run
