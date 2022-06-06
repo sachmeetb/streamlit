@@ -13,4 +13,4 @@ COPY application.py application.py
 WORKDIR .
 
 # Run
-ENTRYPOINT [“streamlit”, “run”, “app.py”, “–server.port=8080”, “–server.address=0.0.0.0”]
+CMD ["python", "-m", "streamlit.cli", "run", "application.py", "--server.port=8080"]
