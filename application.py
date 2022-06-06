@@ -4,9 +4,6 @@ import numpy as np
 import pickle
 from google.cloud import aiplatform as aip
 
-# pickle_in = open('model.pkl', 'rb') 
-# model = pickle.load(pickle_in)
-
 aip.init(project="aesthetic-rush-352008", location="us-central1",staging_bucket="cloud-ai-platform-9ce4bf1d-d8b8-41cf-92cb-1732efff16a0")
 
 
