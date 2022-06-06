@@ -2,3 +2,4 @@ numpy
 pandas
 protobuf
 streamlit
+google-cloud
