@@ -13,4 +13,4 @@ COPY application.py application.py
 WORKDIR .
 
 # Run
-CMD ["python", "-m", "streamlit.cli", "run", "application.py", "--server.port=8080"]
+CMD ["python", "-m", "streamlit", "run", "application.py", "--server.port=8080"]
