@@ -69,6 +69,7 @@ def main():
     st.title("Credit Card Fraud Detection")
 
     with st.sidebar:
+        st.image("https://m.foolcdn.com/media/affiliates/images/research-artdebit-and-credit-card-market-shar.width-1200_oL4ST5A.jpg")
         st.write("Welcome to Credit Card Fraud Validation, please use the fields provided, then click on Predict to check if the Credit Transaction was a fraud or not")
     dfh = st.number_input("Distance from Home")
     dflt = st.number_input("Distance from Last Transaction")
