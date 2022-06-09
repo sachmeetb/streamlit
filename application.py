@@ -1,30 +1,49 @@
-import streamlit as st
-import pandas as pd
-import numpy as np
 import pickle
+
+import numpy as np
+import pandas as pd
 from google.cloud import aiplatform as aip
 
-aip.init(project="aesthetic-rush-352008", location="us-central1",staging_bucket="cloud-ai-platform-9ce4bf1d-d8b8-41cf-92cb-1732efff16a0")
+import streamlit as st
+
+aip.init(
+    project="aesthetic-rush-352008",
+    location="us-central1",
+    staging_bucket="cloud-ai-platform-9ce4bf1d-d8b8-41cf-92cb-1732efff16a0",
+)
 
 
-def predict_function(distance_from_home, distance_from_last_transaction, ratio_to_median_purchase_price, repeat_retailer, used_chip, used_pin_number, online_order):
-    #prediction = model.predict([[distance_from_home, distance_from_last_transaction, ratio_to_median_purchase_price, int(repeat_retailer), int(used_chip), int(used_pin_number), int(online_order)]])
-    prediction = dict(predict_tabular_classification_sample(
-        project="1048826067215",
-        endpoint_id="8272153741340180480",
-        location="us-central1",
-        instance_dict={ "distance_from_home":distance_from_home, 
-            "distance_from_last_transaction": distance_from_last_transaction, 
-            "ratio_to_median_purchase_price": ratio_to_median_purchase_price, 
-            "repeat_retailer": int(repeat_retailer),
-            "used_chip": int(used_chip),
-            "used_pin_number": int(used_pin_number),
-            "online_order": int(online_order) }
-)[0])
-    if prediction['scores'].index(max(prediction['scores'])) == 0:
+def predict_function(
+    distance_from_home,
+    distance_from_last_transaction,
+    ratio_to_median_purchase_price,
+    repeat_retailer,
+    used_chip,
+    used_pin_number,
+    online_order,
+):
+    # prediction = model.predict([[distance_from_home, distance_from_last_transaction, ratio_to_median_purchase_price, int(repeat_retailer), int(used_chip), int(used_pin_number), int(online_order)]])
+    prediction = dict(
+        predict_tabular_classification_sample(
+            project="1048826067215",
+            endpoint_id="8272153741340180480",
+            location="us-central1",
+            instance_dict={
+                "distance_from_home": distance_from_home,
+                "distance_from_last_transaction": distance_from_last_transaction,
+                "ratio_to_median_purchase_price": ratio_to_median_purchase_price,
+                "repeat_retailer": int(repeat_retailer),
+                "used_chip": int(used_chip),
+                "used_pin_number": int(used_pin_number),
+                "online_order": int(online_order),
+            },
+        )[0]
+    )
+    if prediction["scores"].index(max(prediction["scores"])) == 0:
         return "Not Fraud"
     else:
         return "Fraud"
+
 
 from typing import Dict
 
@@ -50,12 +69,8 @@ def predict_tabular_classification_sample(
     instances = [instance]
     parameters_dict = {}
     parameters = json_format.ParseDict(parameters_dict, Value())
-    endpoint = client.endpoint_path(
-        project=project, location=location, endpoint=endpoint_id
-    )
-    response = client.predict(
-        endpoint=endpoint, instances=instances, parameters=parameters
-    )
+    endpoint = client.endpoint_path(project=project, location=location, endpoint=endpoint_id)
+    response = client.predict(endpoint=endpoint, instances=instances, parameters=parameters)
     print("response")
     print(" deployed_model_id:", response.deployed_model_id)
     # See gs://google-cloud-aiplatform/schema/predict/prediction/tabular_classification_1.0.0.yaml for the format of the predictions.
@@ -75,7 +90,9 @@ def main():
     up = st.checkbox("pin")
     oo = st.checkbox("online")
     if st.button("Click here for prediction"):
-        result = predict_function(dfh,dflt,rmp,rr,uc,up,oo)
+        result = predict_function(dfh, dflt, rmp, rr, uc, up, oo)
         st.text(result)
-if __name__=='__main__': 
-        main()
+
+
+if __name__ == "__main__":
+    main()
