@@ -82,14 +82,22 @@ def predict_tabular_classification_sample(
 
 def main():
     st.title("Credit Card Fraud Detection")
+
+    with st.sidebar:
+        st.image(
+            "https://m.foolcdn.com/media/affiliates/images/research-artdebit-and-credit-card-market-shar.width-1200_oL4ST5A.jpg"
+        )
+        st.write(
+            "Welcome to Credit Card Fraud Validation, please use the fields provided, then click on Predict to check if the Credit Transaction was a fraud or not"
+        )
     dfh = st.number_input("Distance from Home")
     dflt = st.number_input("Distance from Last Transaction")
     rmp = st.number_input("Ratio to Median Purchase Price")
-    rr = st.checkbox("reapet reatailer?")
-    uc = st.checkbox("chip")
-    up = st.checkbox("pin")
-    oo = st.checkbox("online")
-    if st.button("Click here for prediction"):
+    rr = st.checkbox("Repeat Retailer?")
+    uc = st.checkbox("Use of Chip?")
+    up = st.checkbox("Use of PIN?")
+    oo = st.checkbox("Online Transaction?")
+    if st.button("Predict"):
         result = predict_function(dfh, dflt, rmp, rr, uc, up, oo)
         st.text(result)
 
